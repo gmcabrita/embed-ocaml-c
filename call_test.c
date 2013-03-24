@@ -34,7 +34,7 @@ static void ocaml_test_return_string(void) {
 
     value *func = caml_named_value("test_return_string");
 
-    printf("Running test_pass_integer... ");
+    printf("Running test_return_string... ");
     if (func == NULL) {
         printf("Error retrieving function.");
     } else {
