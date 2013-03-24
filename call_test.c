@@ -10,6 +10,10 @@
 #define ANSI_RESET  "\x1b[0m"
 #define ANSI_RED    "\x1b[31m"
 
+CAMLprim value test_return_int(value n) {
+    return Val_int(Int_val(n) * 5);
+}
+
 static void ocaml_test_return_int(void) {
     CAMLparam0();
     CAMLlocal1(res);
@@ -53,7 +57,6 @@ static void ocaml_test_pass_integer(void) {
     CAMLlocal1(res);
 
     value *func = caml_named_value("test_pass_integer");
-    func = NULL;
 
     printf("Running test_pass_integer... ");
     if (func == NULL) {
@@ -68,12 +71,34 @@ static void ocaml_test_pass_integer(void) {
     CAMLreturn0;
 }
 
+static void ocaml_test_call_c(void) {
+    CAMLparam0();
+    CAMLlocal1(res);
+
+    value *func = caml_named_value("test_call_c");
+
+    printf("Running test_call_c... ");
+    if (func == NULL) {
+        printf(ANSI_RED "\tFAIL\t" ANSI_RESET "Error retrieving function.\n");
+    } else {
+        res = caml_callback(*func, Val_unit);
+        printf("%d\n", Int_val(res));
+        printf("%d\n", Int_val(test_return_int(5)) * 5);
+        assert(Int_val(res) == Int_val(test_return_int(5)) * 5);
+
+        printf(ANSI_GREEN "\tOK\n" ANSI_RESET);
+    }
+
+    CAMLreturn0;
+}
+
 int main(int argc, char **argv) {
     caml_startup(argv); // startup or main?
 
     ocaml_test_return_int();
     ocaml_test_return_string();
     ocaml_test_pass_integer();
+    //ocaml_test_call_c();
     printf("All tests ran successfully.\n");
 
     return 0;

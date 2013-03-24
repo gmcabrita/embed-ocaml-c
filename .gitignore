@@ -2,4 +2,8 @@ bin/
 *.cmi
 *.cmx
 *.cmo
+*.cma
+*.mli
+*.so
+*.a
 *.o
