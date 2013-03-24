@@ -82,11 +82,9 @@ static void ocaml_test_call_c(void) {
         printf(ANSI_RED "\tFAIL\t" ANSI_RESET "Error retrieving function.\n");
     } else {
         res = caml_callback(*func, Val_unit);
-        printf("%d\n", Int_val(res));
-        printf("%d\n", Int_val(test_return_int(5)) * 5);
-        assert(Int_val(res) == Int_val(test_return_int(5)) * 5);
+        assert(Int_val(res) == Int_val(test_return_int(Val_int(5))) * 5);
 
-        printf(ANSI_GREEN "\tOK\n" ANSI_RESET);
+        printf(ANSI_GREEN "\t\tOK\n" ANSI_RESET);
     }
 
     CAMLreturn0;
@@ -98,7 +96,7 @@ int main(int argc, char **argv) {
     ocaml_test_return_int();
     ocaml_test_return_string();
     ocaml_test_pass_integer();
-    //ocaml_test_call_c();
+    ocaml_test_call_c();
     printf("All tests ran successfully.\n");
 
     return 0;
