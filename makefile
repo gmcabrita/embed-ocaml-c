@@ -25,4 +25,8 @@ clean:
 	rm -f *.cmi
 	rm -f *.cmx
 	rm -f *.cmo
+	rm -f *.mli
+	rm -f *.cma
+	rm -f *.so
 	rm -f *.o
+	rm -f *.a
